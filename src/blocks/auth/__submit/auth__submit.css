@@ -1,0 +1,10 @@
+.auth__submit {
+   height: 50px;
+   background: #FFFFFF;
+   border-radius: 2px;
+   font-weight: 400;
+   font-size: 18px;
+   line-height: 22px;
+   text-align: center;
+   color: #000000;
+}

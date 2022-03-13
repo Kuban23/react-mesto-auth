@@ -10,6 +10,7 @@ import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmPopup from './ConfirmPopup';
+import Login from './Login';
 
 function App() {
 
@@ -183,6 +184,9 @@ function App() {
                <Header />
                {/* <!--Блок profile ----------------------------------------------------------------------------> */}
                {/* <!--Блок elements ----------------------------------------------------------------------------> */}
+               
+               <Login/>
+
                <Main
                   onEditAvatar={handleEditAvatarClick}
                   onEditProfile={handleEditProfileClick}
@@ -229,6 +233,8 @@ function App() {
                   onCardDelete= {()=>handleCardDelete(selectedCard)} /////////
 
                />
+
+             
 
 
             </div>

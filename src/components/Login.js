@@ -7,7 +7,7 @@ function Login() {
       <section className="auth">
          <p className="auth__title">Вход</p>
          <form className="auth__form">
-            <input className="auth__input" placeholder="Emai" type='email' name='email' required
+            <input className="auth__input" placeholder="Email" type='email' name='email' required
           minLength='2' maxLength='30'/>
             <span className="auth__input-error" />
 
