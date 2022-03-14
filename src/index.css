@@ -62,6 +62,10 @@
 @import url("./blocks/popup/__image/popup__image.css");
 @import url("./blocks/popup/__title-image/popup__title-image.css");
 
+@import url("./blocks/popup/__container-infotool/popup__container-infotool.css");
+@import url("./blocks/popup/__union-image/popup__union-image.css");
+@import url("./blocks/popup/__title/_type/popup__title_type_infotool.css");
+
 
 /* -- Блок регистрации---------------------------------------------------------------------------- */
 @import url("./blocks/auth/auth.css");
@@ -70,3 +74,4 @@
 @import url("./blocks/auth/__input/auth__input.css");
 @import url("./blocks/auth/__input-error/auth__input-error.css");
 @import url("./blocks/auth/__submit/auth__submit.css");
+@import url("./blocks/auth/__link/auth__link.css");

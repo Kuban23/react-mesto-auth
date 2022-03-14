@@ -11,6 +11,8 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import ConfirmPopup from './ConfirmPopup';
 import Login from './Login';
+import Register from './Register';
+import InfoTooltip from './InfoTooltip';
 
 function App() {
 
@@ -23,6 +25,12 @@ function App() {
    ///////////////////////////////////////////////////////////
    const [isConfirmPopup, setIsConfirmPopup] = React.useState(false);
 // const [isImage]=React.useState(false);
+
+const [isInfoTooltip, setInfoTooltip] = React.useState({
+   title:"Что-то пошло не так! Попробуйте ещё раз.",
+   icons: false,
+});
+
 
 
    // Переменные состояния cards
@@ -86,6 +94,7 @@ function App() {
       setIsAddPlacePopupOpen(false);
       setIsImagePopupOpen(false);
       setIsConfirmPopup(false);
+      setInfoTooltip(false);
    }
 
    // Обработчик для изменения профайла 
@@ -187,6 +196,8 @@ function App() {
                
                <Login/>
 
+               <Register/>
+
                <Main
                   onEditAvatar={handleEditAvatarClick}
                   onEditProfile={handleEditProfileClick}
@@ -231,10 +242,15 @@ function App() {
                   isOpen={isConfirmPopup}
                   onClose={closeAllPopup}
                   onCardDelete= {()=>handleCardDelete(selectedCard)} /////////
-
+                  
                />
 
-             
+             <InfoTooltip
+             isOpen={isInfoTooltip}
+             onClose={closeAllPopup}
+             icons={isInfoTooltip.icons}  
+             title={isInfoTooltip.title}      
+             />
 
 
             </div>

@@ -7,4 +7,10 @@
    line-height: 22px;
    text-align: center;
    color: #000000;
+   cursor: pointer;
+   transition: opacity 0.5s ease-in-out;
+}
+
+.auth__submit:hover{
+   opacity: 0.85;
 }

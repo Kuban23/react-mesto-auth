@@ -1,0 +1,7 @@
+.popup__union-image{
+	width: 120px;
+	height: 120px;
+	background-image: url('/src/image/success.png');
+	background-repeat: no-repeat;
+	
+}
