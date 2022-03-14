@@ -13,7 +13,8 @@ import ConfirmPopup from './ConfirmPopup';
 import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
-import {Route, Switch} from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
+import ProtectedRoute from './ProtectedRoute';
 
 function App() {
 
@@ -21,16 +22,20 @@ function App() {
    const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
    const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
    const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-   const [selectedCard, setSelectedCard] = React.useState(null);
    const [isImagePopupOpen, setIsImagePopupOpen] = React.useState(false);
-   ///////////////////////////////////////////////////////////
    const [isConfirmPopup, setIsConfirmPopup] = React.useState(false);
-// const [isImage]=React.useState(false);
 
-const [isInfoTooltip, setInfoTooltip] = React.useState({
-   title:"Что-то пошло не так! Попробуйте ещё раз.",
-   icons: false,
-});
+   // Состояние карточки
+   const [selectedCard, setSelectedCard] = React.useState(null);
+
+   // Состояние вошедшего в систему
+   const [loggedIn, setloggedIn]=React.useState(false);
+
+   // Состояние попапа который информирует об успешной или не очень регистрации
+   const [isInfoTooltip, setInfoTooltip] = React.useState({
+      title: "Что-то пошло не так! Попробуйте ещё раз.",
+      icons: false,
+   });
 
 
 
@@ -75,19 +80,19 @@ const [isInfoTooltip, setInfoTooltip] = React.useState({
       setSelectedCard(data);
       setIsImagePopupOpen(true);
    };
-   /////////////////////////////////////////////////////////////
+   // Функция подтверждения удаления
    function handleConfirmPopup() {
       setIsConfirmPopup(true);
    }
 
-// Функция удаления карточки /////////////////////////////
-   function handleCardDeleteClick(card){
+   // Функция удаления карточки 
+   function handleCardDeleteClick(card) {
       setSelectedCard(card);
       setIsConfirmPopup(true);
    }
 
 
-  
+
    // Закрываем все попапы
    function closeAllPopup() {
       setIsEditAvatarPopupOpen(false);
@@ -194,19 +199,17 @@ const [isInfoTooltip, setInfoTooltip] = React.useState({
                <Header />
                {/* <!--Блок profile ----------------------------------------------------------------------------> */}
                {/* <!--Блок elements ----------------------------------------------------------------------------> */}
-               
-               <Switch>
-               <Route path='/sign-in'>
-               <Login/>
-               </Route>
-               
-               <Route path='/sign-up'>
-               <Register/>
-               </Route>
-               </Switch>
-               
 
-               <Main
+               <Switch>
+                  <Route path='/sign-in'>
+                     <Login />
+                  </Route>
+
+                  <Route path='/sign-up'>
+                     <Register />
+                  </Route>
+
+                  <ProtectedRoute
                   onEditAvatar={handleEditAvatarClick}
                   onEditProfile={handleEditProfileClick}
                   onAddPlace={handleEditPlaceClick}
@@ -217,7 +220,14 @@ const [isInfoTooltip, setInfoTooltip] = React.useState({
                   onConfirmPopup={handleConfirmPopup}
                   //onImagePopup={handlePopupImageOpen}
                   onCardDelete={handleCardDeleteClick}
+                  component={Main}
+                  loggedIn={loggedIn}
                />
+                 
+               </Switch>
+
+
+              
 
                <Footer />
 
@@ -249,16 +259,16 @@ const [isInfoTooltip, setInfoTooltip] = React.useState({
 
                   isOpen={isConfirmPopup}
                   onClose={closeAllPopup}
-                  onCardDelete= {()=>handleCardDelete(selectedCard)} /////////
-                  
+                  onCardDelete={() => handleCardDelete(selectedCard)}
+
                />
 
-             <InfoTooltip
-             isOpen={isInfoTooltip}
-             onClose={closeAllPopup}
-             icons={isInfoTooltip.icons}  
-             title={isInfoTooltip.title}      
-             />
+               <InfoTooltip
+                  isOpen={isInfoTooltip}
+                  onClose={closeAllPopup}
+                  icons={isInfoTooltip.icons}
+                  title={isInfoTooltip.title}
+               />
 
 
             </div>
