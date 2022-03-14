@@ -13,6 +13,7 @@ import ConfirmPopup from './ConfirmPopup';
 import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
+import {Route, Switch} from 'react-router-dom';
 
 function App() {
 
@@ -194,9 +195,16 @@ const [isInfoTooltip, setInfoTooltip] = React.useState({
                {/* <!--Блок profile ----------------------------------------------------------------------------> */}
                {/* <!--Блок elements ----------------------------------------------------------------------------> */}
                
+               <Switch>
+               <Route path='/sign-in'>
                <Login/>
-
+               </Route>
+               
+               <Route path='/sign-up'>
                <Register/>
+               </Route>
+               </Switch>
+               
 
                <Main
                   onEditAvatar={handleEditAvatarClick}

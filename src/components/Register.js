@@ -1,5 +1,5 @@
 import React from "react";
-
+import {Link} from 'react-router-dom';
 
 function Register() {
 
@@ -16,8 +16,8 @@ function Register() {
 					minLength='8' maxLength='30' />
 				<span className="auth__input-error" />
 			</form>
-			<button className="auth__submit">Зарегистрироваться</button>
-			<p className="auth__link">Уже зарегистрированы? Войти</p>
+			<button className="auth__submit" to='/sign-in'>Зарегистрироваться</button>
+			<Link className="auth__link">Уже зарегистрированы? Войти</Link>
 
 		</section>
 
