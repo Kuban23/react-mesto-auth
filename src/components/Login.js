@@ -14,8 +14,9 @@ function Login() {
             <input className="auth__input" placeholder="Пароль" type='password' name='password' required
           minLength='8' maxLength='30'/>
             <span className="auth__input-error" />
+            <button className="auth__submit">Войти</button>
          </form>
-         <button className="auth__submit">Войти</button>
+         
 
       </section>
 

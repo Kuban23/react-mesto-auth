@@ -29,15 +29,13 @@ function App() {
    const [selectedCard, setSelectedCard] = React.useState(null);
 
    // Состояние вошедшего в систему
-   const [loggedIn, setloggedIn]=React.useState(false);
+   const [loggedIn, setloggedIn] = React.useState(false);
 
-   // Состояние попапа который информирует об успешной или не очень регистрации
-   const [isInfoTooltip, setInfoTooltip] = React.useState({
-      title: "Что-то пошло не так! Попробуйте ещё раз.",
-      icons: false,
-   });
+   // Состояние открытого попапа который информирует об успешной или не очень регистрации
+   const [isInfoTooltip, setInfoTooltip] = React.useState(false);
 
-
+   // Состояние попапа при успешной/неудачной регистрации
+   const [isRegister, setIsRegister] = React.useState(false);
 
    // Переменные состояния cards
    const [cards, setCards] = React.useState([]);
@@ -210,24 +208,24 @@ function App() {
                   </Route>
 
                   <ProtectedRoute
-                  onEditAvatar={handleEditAvatarClick}
-                  onEditProfile={handleEditProfileClick}
-                  onAddPlace={handleEditPlaceClick}
-                  onCardClick={handleCardClick}
-                  cards={cards}
-                  onCardLike={handleCardLike}
-                  //onCardDelete={handleCardDelete}
-                  onConfirmPopup={handleConfirmPopup}
-                  //onImagePopup={handlePopupImageOpen}
-                  onCardDelete={handleCardDeleteClick}
-                  component={Main}
-                  loggedIn={loggedIn}
-               />
-                 
+                     onEditAvatar={handleEditAvatarClick}
+                     onEditProfile={handleEditProfileClick}
+                     onAddPlace={handleEditPlaceClick}
+                     onCardClick={handleCardClick}
+                     cards={cards}
+                     onCardLike={handleCardLike}
+                     //onCardDelete={handleCardDelete}
+                     onConfirmPopup={handleConfirmPopup}
+                     //onImagePopup={handlePopupImageOpen}
+                     onCardDelete={handleCardDeleteClick}
+                     component={Main}
+                     loggedIn={loggedIn}
+                  />
+
                </Switch>
 
 
-              
+
 
                <Footer />
 
@@ -266,8 +264,8 @@ function App() {
                <InfoTooltip
                   isOpen={isInfoTooltip}
                   onClose={closeAllPopup}
-                  icons={isInfoTooltip.icons}
-                  title={isInfoTooltip.title}
+                  onSuccess={isRegister}
+                  name='infoTooltip'
                />
 
 

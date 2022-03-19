@@ -15,9 +15,10 @@ function Register() {
 				<input className="auth__input" placeholder="Пароль" type='password' name='password' required
 					minLength='8' maxLength='30' />
 				<span className="auth__input-error" />
+            <button className="auth__submit" to='/sign-in'>Зарегистрироваться</button>
 			</form>
-			<button className="auth__submit" to='/sign-in'>Зарегистрироваться</button>
-			<Link className="auth__link">Уже зарегистрированы? Войти</Link>
+			
+			<p className="auth__link-title">Уже зарегистрированы?<Link className="auth__link">Войти</Link></p>
 
 		</section>
 

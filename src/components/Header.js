@@ -13,6 +13,13 @@ function Header() {
                Войти
             </Link>
             </Route>
+
+            <Route path='/sign-in'>
+            <Link className='header__link' to='/sign-up'>
+               Регистрация
+            </Link>
+            </Route>
+
       </header>
    );
 };

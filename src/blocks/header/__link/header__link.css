@@ -6,7 +6,8 @@
    color: #FFFFFF;
    cursor: pointer;
    transition: opacity 0.5s ease-in-out;
-   border: 2px solid red;
+   text-decoration: none;
+   padding-bottom: 10px;
 }
 
 .header__link:hover{

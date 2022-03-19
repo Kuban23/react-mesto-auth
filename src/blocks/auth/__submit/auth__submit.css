@@ -9,6 +9,8 @@
    color: #000000;
    cursor: pointer;
    transition: opacity 0.5s ease-in-out;
+   margin-top: 216px;
+   width: 100%;
 }
 
 .auth__submit:hover{
