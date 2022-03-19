@@ -10,7 +10,7 @@ const checkResponse = (res) => {
    return res.json();
 };
 
-// Функция для регистрации пользователя
+// Функция для запроса регистрации пользователя
 export const register = (email, password) => {
    return (fetch(`${BASE_URL}/signup`, {
       method: 'POST',
@@ -25,7 +25,7 @@ export const register = (email, password) => {
    )
 }
 
-// Функция для авторизации пользователя
+// Функция для запроса авторизации пользователя
 export const authorize = (email, password) => {
    fetch(`${BASE_URL}/signin`, {
       'method': 'POST',

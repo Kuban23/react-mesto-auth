@@ -13,8 +13,9 @@ import ConfirmPopup from './ConfirmPopup';
 import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
+import * as auth from '../utils/Auth';
 
 function App() {
 
@@ -42,6 +43,10 @@ function App() {
 
    // Переменная состояния для текущего пользователя.
    const [currentUser, setCurrentUser] = React.useState({});
+
+
+   // Переменная для работы с useHistory
+   const history = useHistory();
 
    // Эффект который будет вызывать getProfileUserInfo() и getLoadCards(), обновлять стейт переменную 
    // из полученного значения и загрузку карточек с сервера. 
@@ -188,6 +193,25 @@ function App() {
 
    }, [])
 
+   //  Функция регистрации пользователя
+   function hendleRegister(email, password) {
+      auth.register(email, password)
+         .then((data) => { // получаем попап для подтверждения или отклонения регистрации, узнаем, есть ли в присланных данных email
+            if (data) {
+               setInfoTooltip(true); // прописываем стэйты попапа
+               setIsRegister(true);
+            }
+            history.push('/sign-in')  // переходим на страницу входа
+         })
+         .catch((error) => {
+            console.log(error);
+            setInfoTooltip(true);
+            setIsRegister(false);
+         })
+   }
+
+
+
 
    return (
       <CurrentUserContext.Provider value={currentUser}>
@@ -200,14 +224,14 @@ function App() {
 
                <Switch>
                   <Route path='/sign-in'>
-                     <Login 
-                     
+                     <Login
+
                      />
                   </Route>
 
                   <Route path='/sign-up'>
-                     <Register 
-                     
+                     <Register
+
                      />
                   </Route>
 
