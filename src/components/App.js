@@ -231,7 +231,7 @@ function App() {
 
                   <Route path='/sign-up'>
                      <Register
-
+                        hendleRegister={hendleRegister}
                      />
                   </Route>
 

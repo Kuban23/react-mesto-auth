@@ -1,4 +1,3 @@
-import App from "../components/App";
 
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
