@@ -227,7 +227,11 @@ function App() {
          })
    }
 
+   // Функция для выхода из профиля
+   function handleSignOut() {
 
+      history.push('/sign-in')
+   }
 
 
    return (
@@ -235,9 +239,9 @@ function App() {
          <div className='background'>
             <div className="page">
 
-               <Header />
-               {/* <!--Блок profile ----------------------------------------------------------------------------> */}
-               {/* <!--Блок elements ----------------------------------------------------------------------------> */}
+               <Header
+                  handleSignOut={handleSignOut}
+               />
 
                <Switch>
                   <Route path='/sign-in'>
