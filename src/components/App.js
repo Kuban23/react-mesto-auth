@@ -200,11 +200,15 @@ function App() {
 
                <Switch>
                   <Route path='/sign-in'>
-                     <Login />
+                     <Login 
+                     
+                     />
                   </Route>
 
                   <Route path='/sign-up'>
-                     <Register />
+                     <Register 
+                     
+                     />
                   </Route>
 
                   <ProtectedRoute
@@ -223,9 +227,6 @@ function App() {
                   />
 
                </Switch>
-
-
-
 
                <Footer />
 
