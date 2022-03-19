@@ -2,7 +2,7 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
+//import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -29,10 +29,10 @@ function App() {
    // Состояние карточки
    const [selectedCard, setSelectedCard] = React.useState(null);
 
-   // Состояние вошедшего в систему
+   // Состояние авторизации пользователя(вошел в систему или нет)
    const [loggedIn, setloggedIn] = React.useState(false);
 
-   // Состояние открытого попапа который информирует об успешной или не очень регистрации
+   // остояние открытого попапа который информирует об успешной или не очень регистрации
    const [isInfoTooltip, setInfoTooltip] = React.useState(false);
 
    // Состояние попапа при успешной/неудачной регистрации
@@ -44,6 +44,8 @@ function App() {
    // Переменная состояния для текущего пользователя.
    const [currentUser, setCurrentUser] = React.useState({});
 
+   // Состояние email пользователя
+   const [email, setEmail] = React.useState('');
 
    // Переменная для работы с useHistory
    const history = useHistory();
@@ -51,6 +53,7 @@ function App() {
    // Эффект который будет вызывать getProfileUserInfo() и getLoadCards(), обновлять стейт переменную 
    // из полученного значения и загрузку карточек с сервера. 
    React.useEffect(() => {
+
       Promise.all([ // в Promise.all передаем массив промисов которые нужно выполнить
          api.getProfileUserInfo(),
          api.getLoadCards()
@@ -63,7 +66,14 @@ function App() {
          .catch((error) => {
             console.log(error);
          })
+
    }, []);
+
+   //Проверяем есть ли токен в хранилище (делаем 1 раз при монтировании компоненты, 
+   // + мы устраняем выход с профиля при перезагрузке страницы)
+   React.useEffect(() => {
+      checkTokenlocalStorage();
+   }, [])
 
 
    // Обработчики для переменных состояния, стэйтовые переменные.
@@ -216,7 +226,7 @@ function App() {
          .then((data) => {
             if (data.token) { // проверяем есть ли присланных данных Токен
                setloggedIn(true)
-
+               // setEmail(email);
             }
             history.push('/')
          })
@@ -229,8 +239,26 @@ function App() {
 
    // Функция для выхода из профиля
    function handleSignOut() {
-
       history.push('/sign-in')
+   }
+
+   // Функция для поиска токена в localStorage
+   function checkTokenlocalStorage() {
+      const jwt = localStorage.getItem('jwt'); // сохраняем токен из localStorage и сохр. в переменную
+      if (jwt) { // Если токен есть, то залогиниваемся
+         auth.checkToken(jwt)
+            .then((res) => {
+               if (res.data.email) {
+                  setEmail(res.data.email)
+               }
+               setloggedIn(true);
+               history.push('/')
+            })
+            .catch((error) => {
+               console.log(error);
+            })
+      }
+
    }
 
 
@@ -269,6 +297,7 @@ function App() {
                      onCardDelete={handleCardDeleteClick}
                      component={Main}
                      loggedIn={loggedIn}
+                     email={email}
                   />
 
                </Switch>
