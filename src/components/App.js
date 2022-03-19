@@ -210,6 +210,23 @@ function App() {
          })
    }
 
+   // Функция для залогивания пользователя
+   function handleLogin(email, password) {
+      auth.authorize(email, password)
+         .then((data) => {
+            if (data.token) { // проверяем есть ли присланных данных Токен
+               setloggedIn(true)
+
+            }
+            history.push('/')
+         })
+         .catch((error) => {
+            console.log(error)
+            setInfoTooltip(true);
+            setIsRegister(false);
+         })
+   }
+
 
 
 
@@ -225,7 +242,7 @@ function App() {
                <Switch>
                   <Route path='/sign-in'>
                      <Login
-
+                        handleLogin={handleLogin}
                      />
                   </Route>
 

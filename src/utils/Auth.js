@@ -26,15 +26,14 @@ export const register = (email, password) => {
 
 // Функция для запроса авторизации пользователя
 export const authorize = (email, password) => {
-   fetch(`${BASE_URL}/signin`, {
-      'method': 'POST',
-      'headers': {
-         'Accept': 'Application/json',
-         'Content-type': 'Application/json'
+   return (fetch(`${BASE_URL}/signin`, {
+      method: 'POST',
+      headers: {
+         'Accept': 'application/json',
+         'Content-type': 'application/json'
       },
       body: JSON.stringify({ email, password })
    })
       .then(checkResponse)
+   )
 }
-
-
