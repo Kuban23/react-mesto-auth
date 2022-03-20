@@ -16,6 +16,7 @@ import InfoTooltip from './InfoTooltip';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import * as auth from '../utils/Auth';
+//import { AuthContext } from '../contexts/AuthContext';
 
 function App() {
 
@@ -66,6 +67,7 @@ function App() {
          .catch((error) => {
             console.log(error);
          })
+
 
    }, []);
 
@@ -225,16 +227,17 @@ function App() {
       auth.authorize(email, password)
          .then((data) => {
             if (data.token) { // проверяем есть ли присланных данных Токен
-               setloggedIn(true)
-               // setEmail(email);
+               setloggedIn(true);
+               setEmail(email);
+               localStorage.setItem('jwt', data.token);
             }
             history.push('/')
          })
          .catch((error) => {
-            console.log(error)
-            setInfoTooltip(true);
+            console.log(error);
             setIsRegister(false);
-         })
+            setInfoTooltip(true);
+         });
    }
 
    // Функция для выхода из профиля
@@ -249,26 +252,32 @@ function App() {
          auth.checkToken(jwt)
             .then((res) => {
                if (res.data.email) {
-                  setEmail(res.data.email)
+                  setEmail(res.data.email);
                }
                setloggedIn(true);
                history.push('/')
+
             })
             .catch((error) => {
                console.log(error);
-            })
+
+            });
       }
+
 
    }
 
 
    return (
       <CurrentUserContext.Provider value={currentUser}>
+
+
          <div className='background'>
             <div className="page">
 
                <Header
                   handleSignOut={handleSignOut}
+                  email={email}
                />
 
                <Switch>
@@ -346,6 +355,9 @@ function App() {
 
             </div>
          </div>
+
+
+
       </CurrentUserContext.Provider>
    );
 }
