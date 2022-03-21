@@ -26,7 +26,6 @@ function Register(props) {
       props.hendleRegister(data.email, data.password);
    }
 
-
    return (
 
       <section className="auth">
@@ -43,9 +42,7 @@ function Register(props) {
          </form>
 
          <div className="auth__link-title">Уже зарегистрированы?<Link className="auth__link" to='/sign-in'>Войти</Link></div>
-
-       
-
+     
       </section>
 
    )

@@ -2,7 +2,6 @@ import React from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-//import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import api from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -13,10 +12,9 @@ import ConfirmPopup from './ConfirmPopup';
 import Login from './Login';
 import Register from './Register';
 import InfoTooltip from './InfoTooltip';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import * as auth from '../utils/Auth';
-//import { AuthContext } from '../contexts/AuthContext';
 
 function App() {
 
@@ -54,29 +52,28 @@ function App() {
    // Эффект который будет вызывать getProfileUserInfo() и getLoadCards(), обновлять стейт переменную 
    // из полученного значения и загрузку карточек с сервера. 
    React.useEffect(() => {
+      if (loggedIn) { // Делаю проверку залогинился ли пользователь (не понял как реализовать проверку с currentUser)
+         Promise.all([ // в Promise.all передаем массив промисов которые нужно выполнить
+            api.getProfileUserInfo(),
+            api.getLoadCards()
+         ])
+            .then(([userData, cardsData]) => {
+               setCurrentUser(userData)
+               setCards(cardsData)
+               closeAllPopup()
+            })
+            .catch((error) => {
+               console.log(error);
+            })
+      }
 
-      Promise.all([ // в Promise.all передаем массив промисов которые нужно выполнить
-         api.getProfileUserInfo(),
-         api.getLoadCards()
-      ])
-         .then(([userData, cardsData]) => {
-            setCurrentUser(userData)
-            setCards(cardsData)
-            closeAllPopup()
-         })
-         .catch((error) => {
-            console.log(error);
-         })
-
-
-   }, []);
+   }, [loggedIn]);
 
    //Проверяем есть ли токен в хранилище (делаем 1 раз при монтировании компоненты, 
    // + мы устраняем выход с профиля при перезагрузке страницы)
    React.useEffect(() => {
       checkTokenlocalStorage();
    }, [])
-
 
    // Обработчики для переменных состояния, стэйтовые переменные.
    function handleEditAvatarClick() {
@@ -95,6 +92,7 @@ function App() {
       setSelectedCard(data);
       setIsImagePopupOpen(true);
    };
+
    // Функция подтверждения удаления
    function handleConfirmPopup() {
       setIsConfirmPopup(true);
@@ -105,8 +103,6 @@ function App() {
       setSelectedCard(card);
       setIsConfirmPopup(true);
    }
-
-
 
    // Закрываем все попапы
    function closeAllPopup() {
@@ -159,7 +155,6 @@ function App() {
 
    // Реализация удаления карточки
    function handleCardDelete(card) {
-
       // Отправляю запрос в API и получаю массив, исключаю из него удалённую карточку
       api.deleteCard(card._id)
          .then(() => {
@@ -169,7 +164,6 @@ function App() {
          .catch((error) => {
             console.log(error);
          })
-
    }
 
    // Запрос API добавление новой карточки
@@ -229,9 +223,10 @@ function App() {
             if (data.token) { // проверяем есть ли присланных данных Токен
                setloggedIn(true);
                setEmail(email);
+               history.push('/')
                localStorage.setItem('jwt', data.token);
             }
-            history.push('/')
+            // history.push('/')
          })
          .catch((error) => {
             console.log(error);
@@ -260,17 +255,12 @@ function App() {
             })
             .catch((error) => {
                console.log(error);
-
             });
       }
-
-
    }
-
 
    return (
       <CurrentUserContext.Provider value={currentUser}>
-
 
          <div className='background'>
             <div className="page">
@@ -294,6 +284,7 @@ function App() {
                   </Route>
 
                   <ProtectedRoute
+                     exact path='/'
                      onEditAvatar={handleEditAvatarClick}
                      onEditProfile={handleEditProfileClick}
                      onAddPlace={handleEditPlaceClick}
@@ -308,6 +299,10 @@ function App() {
                      loggedIn={loggedIn}
                      email={email}
                   />
+
+                  <Route>
+                     {loggedIn ? <Redirect to="/" /> : <Redirect to="/sign-up" />}
+                  </Route>
 
                </Switch>
 
@@ -338,11 +333,9 @@ function App() {
                />
 
                <ConfirmPopup
-
                   isOpen={isConfirmPopup}
                   onClose={closeAllPopup}
                   onCardDelete={() => handleCardDelete(selectedCard)}
-
                />
 
                <InfoTooltip
@@ -352,11 +345,8 @@ function App() {
                   name='infoTooltip'
                />
 
-
             </div>
          </div>
-
-
 
       </CurrentUserContext.Provider>
    );

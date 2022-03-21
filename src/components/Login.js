@@ -26,7 +26,6 @@ function Login(props) {
       props.handleLogin(data.email, data.password)
    }
 
-
    return (
 
       <section className="auth">
@@ -42,12 +41,8 @@ function Login(props) {
             <button className="auth__submit">Войти</button>
          </form>
 
-
       </section>
-
-
    )
-
 }
 
 export default Login;

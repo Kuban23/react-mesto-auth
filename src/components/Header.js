@@ -6,17 +6,9 @@ import { Link, Route } from 'react-router-dom';
 
 function Header(props) {
 
-   // // Подписываемся на контекст CurrentUserContext
-   // const currentUser = React.useContext(CurrentUserContext);
-
-   // // Подписываемся на контекст AuthContext
-   // const currentEmailValue = React.useContext(AuthContext);
-
    return (
 
       <header className="header">
-         {/* <p className='header__link-email'>{props.email|| ''}</p> */}
-         {/* {currentEmailValue.loggedIn ? <p className='header__link-email'>{currentUser.email}</p> : ''} */}
 
          <img className="header__logo" src={header_logo} alt="Логотип Mesto Russia" />
 
@@ -30,12 +22,10 @@ function Header(props) {
 
          <Route exact path='/'>
             <div className='header__user-info'>
-         <p className='header__link-email'>{props.email}</p>
-            <Link className='header__link' to='/sign-in' onClick={props.handleSignOut}>Выйти</Link>
+               <p className='header__link-email'>{props.email}</p>
+               <Link className='header__link' to='/sign-in' onClick={props.handleSignOut}>Выйти</Link>
             </div>
          </Route>
-
-         {/* {value.loggedIn && <p className='header__link-email'>{currentUser.email}</p>} */}
 
       </header>
    );
