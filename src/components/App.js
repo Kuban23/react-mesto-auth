@@ -238,6 +238,7 @@ function App() {
    // Функция для выхода из профиля
    function handleSignOut() {
       history.push('/sign-in')
+      localStorage.removeItem('jwt');
    }
 
    // Функция для поиска токена в localStorage
